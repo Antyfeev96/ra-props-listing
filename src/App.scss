@@ -32,13 +32,37 @@
 
       .item-price {
         display: inline;
+        font-weight: bold;
+        color: green;
+        font-size: 20px;
       }
 
       .item-quantity {
         display: inline;
         margin: 0;
         float: right;
+        padding: 10px;
+        color: white;
+
+        &.level-low {
+          background-color: red;
+        }
+
+        &.level-medium {
+          background-color: rgb(255, 166, 0);
+        }
+
+        &.level-high {
+          background-color: green;
+        }
       }
+    }
+
+    &__error {
+      text-align: center;
+      height: 250px;
+      width: 250px;
+      line-height: 250px;
     }
   }
 }

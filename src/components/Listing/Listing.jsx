@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-// import shortid from 'shortid'
 
 export default function Listing(props) {
   const { items } = props;
+  console.log(items);
   return (
     <div className="item-list">
       {items.map(item =>
@@ -16,11 +16,15 @@ export default function Listing(props) {
             </div>
           <div className="item-details">
             <p className="item-title">{item.title.length > 50 ? item.title.slice(0, 50) + '...' : item.title}</p>
-            <p className="item-price">{item.currency_code}{item.price}</p>
-            <p className="item-quantity level-medium">{item.quantity} left</p>
+            {item.currency_code === 'USD' ? <p className="item-price">${item.price}</p> :
+            item.currency_code === 'EUR' ? <p className="item-price">€{item.price}</p> :
+            <p className="item-price">{item.price} {item.currency_code}</p>}
+            <p className={`item-quantity ${item.quantity <= 10 ? 'level-low' : 
+            item.quantity <= 20 ? 'level-medium' : 
+            'level-high'}`}>{item.quantity} left</p>
           </div>
           </div>
-        : <div key={item.listing_id}>{item.error_messages[0]}</div>
+        : <div className="item__error" key={item.listing_id}>Нет доступа к товару :(</div>
       )}
     </div>
   )
@@ -37,7 +41,8 @@ Listing.propTypes = {
     materials: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
     currency_code: PropTypes.string,
-    price: PropTypes.string
+    price: PropTypes.string,
+    quantity: PropTypes.number
   }))
 }
 
